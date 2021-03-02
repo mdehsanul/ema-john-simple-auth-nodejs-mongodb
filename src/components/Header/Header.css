@@ -1,0 +1,35 @@
+.header img {
+  height: 100px;
+  padding: 20px 0;
+}
+.header {
+  text-align: center;
+}
+.header nav {
+  background-color: black;
+  line-height: 40px;
+  font-size: 22px;
+}
+nav a {
+  text-decoration: none;
+  color: white;
+  margin-right: 20px;
+  padding: 5px;
+}
+nav a:hover {
+  background-color: gray;
+}
+.search {
+  background-color: #ff9800;
+  line-height: 70px;
+}
+.search input {
+  width: 55%;
+  height: 40px;
+  font-size: 20px;
+  outline: none;
+}
+input::-webkit-input-placeholder {
+  font-size: 20px;
+  line-height: 3;
+}

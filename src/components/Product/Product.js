@@ -1,11 +1,12 @@
+// rsc
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import "./Product.css";
 
 const Product = (props) => {
-  // console.log(props.productSet);
-  const { img, name, seller, price, stock } = props.productSet;
+  // console.log(props.productDetails);
+  const { img, name, seller, price, stock } = props.productDetails;
   return (
     <div className="productDetail">
       <div>
@@ -22,8 +23,9 @@ const Product = (props) => {
         </p>
         <button
           className="main-button"
+          // to avoid default click use arrow function in onClick()
           onClick={() => {
-            props.handleAddProduct(props.productSet);
+            props.handleAddProduct(props.productDetails);
           }}
         >
           <FontAwesomeIcon icon={faShoppingCart} /> add to cart

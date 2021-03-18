@@ -4,6 +4,7 @@ const Cart = (props) => {
   const cart = props.cart;
   //   console.log(cart);
   //   const totalPrice = cart.reduce((total, product ) => total + product.price, 0);
+  // another way to use reduce() manually
   let totalPrice = 0;
   for (let i = 0; i < cart.length; i++) {
     const product = cart[i];
@@ -21,7 +22,8 @@ const Cart = (props) => {
 
   //   const tax = Math.round(totalPrice * 0.1);
   const tax = totalPrice * 0.1;
-  const granTotal = totalPrice + shipping + parseFloat(tax);
+  const grandTotal = totalPrice + shipping + parseFloat(tax);
+  // removing
   const formateNumber = (num) => {
     const precision = num.toFixed(2);
     return Number(precision);
@@ -37,7 +39,7 @@ const Cart = (props) => {
       <p>
         <small>Tax + Vat: {formateNumber(tax)}</small>
       </p>
-      <p>Total Price: {formateNumber(granTotal)}</p>
+      <p>Total Price: {formateNumber(grandTotal)}</p>
     </div>
   );
 };

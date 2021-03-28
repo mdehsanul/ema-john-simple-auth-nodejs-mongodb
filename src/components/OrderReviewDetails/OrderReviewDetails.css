@@ -1,0 +1,10 @@
+.review-item {
+  display: flex;
+  border-bottom: 2px solid lightgrey;
+  margin-top: 20px;
+  margin-bottom: 50px;
+  padding-bottom: 30px;
+}
+.product-detail {
+  padding-top: 50px;
+}

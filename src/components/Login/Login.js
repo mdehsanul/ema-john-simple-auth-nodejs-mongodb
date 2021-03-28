@@ -14,7 +14,7 @@ import {
 function Login() {
   const [newUser, setNewUser] = useState(false);
   const [user, setUser] = useState({
-    isSignedIn: false,
+    isSignIn: false,
     name: "",
     email: "",
     password: "",
@@ -31,34 +31,23 @@ function Login() {
   const loaction = useLocation();
   let { from } = loaction.state || { from: { pathname: "/" } };
 
+  const handleResponse = (response, redirect) => {
+    setUser(response);
+    setLogInUser(response);
+    if (redirect) {
+      history.replace(from);
+    }
+  };
+
   const handleGoogleSignIn = () => {
     GoogleSignIn().then((response) => {
-      setUser(response);
-      setLogInUser(response);
-      history.replace(from);
-    });
-  };
-
-  const handleGoogleSignOut = () => {
-    GoogleSignOut().then((response) => {
-      setUser(response);
-      setLogInUser(response);
-    });
-  };
-
-  const handleFacebookSignIn = () => {
-    FacebookSignIn().then((response) => {
-      setUser(response);
-      setLogInUser(response);
-      history.replace(from);
+      handleResponse(response, true);
     });
   };
 
   const handleGitHubSignIn = () => {
     GitHubSignIn().then((response) => {
-      setUser(response);
-      setLogInUser(response);
-      history.replace(from);
+      handleResponse(response, true);
     });
   };
 
@@ -91,18 +80,14 @@ function Login() {
     if (newUser && user.email && user.password) {
       createUserWithEmailAndPassword(user.name, user.email, user.password).then(
         (response) => {
-          setUser(response);
-          setLogInUser(response);
-          history.replace(from);
+          handleResponse(response, true);
         }
       );
     }
     // signIn With Email And Password
     if (!newUser && user.email && user.password) {
       signInWithEmailAndPassword(user.email, user.password).then((response) => {
-        setUser(response);
-        setLogInUser(response);
-        history.replace(from);
+        handleResponse(response, true);
       });
     }
     // prevent auto page loading when submit button click
@@ -114,29 +99,11 @@ function Login() {
   return (
     // ------------------------------ start firebase --------------------------------------
     <div style={{ textAlign: "center" }}>
-      {/* conditional signIn, signOut */}
-      {user.isSignedIn ? (
-        // Sign Out buton
-        <button onClick={handleGoogleSignOut}>Sign Out</button>
-      ) : (
-        // Sign In Button
-        <button onClick={handleGoogleSignIn}>Sign In</button>
-      )}
-      <br />
-      <button onClick={handleFacebookSignIn}>Log in using Facebook</button>
+      <button onClick={handleGoogleSignIn}>Sign In</button>
       <br />
       <button onClick={handleGitHubSignIn}>Log in using GitHub</button>
 
-      {/* showing user Information when user SignedIn */}
-      {user.isSignedIn && (
-        <div>
-          <p> Welcome {user.name} </p>
-          <p>your email: {user.email}</p>
-          <img src={user.photo} alt="" />
-        </div>
-      )}
       {/*--------------------------- End firebase ------------------------------------------*/}
-
       {/*--------------------------- Start Manual ------------------------------------------*/}
       <h1>Our own authontication</h1>
       <input
@@ -174,13 +141,6 @@ function Login() {
         <br />
         <input type="submit" value={newUser ? "Sign Up" : "Sign In"} />
       </form>
-      <p style={{ color: "red" }}>{user.error}</p>
-      {user.success && (
-        <p style={{ color: "green" }}>
-          User {newUser ? "Created" : "Logged In"} Successfully
-        </p>
-      )}
-
       {/*--------------------------- End Manual ------------------------------------------*/}
     </div>
   );

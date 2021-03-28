@@ -23,56 +23,18 @@ export const GoogleSignIn = () => {
     .signInWithPopup(googleProvider)
     .then((result) => {
       const { displayName, photoURL, email } = result.user;
-      const isSignedIn = {
-        isSignedIn: true,
+      const SignedInUser = {
+        isSignIn: true,
         name: displayName,
         email: email,
         photo: photoURL,
         success: true,
       };
-      return isSignedIn;
+      return SignedInUser;
     })
     .catch((error) => {
       console.log(error);
       console.log(error.message);
-    });
-};
-
-// Google Sign Out using firebase-------------------------------------------
-export const GoogleSignOut = () => {
-  return firebase
-    .auth()
-    .signOut()
-    .then(() => {
-      const isSignedOut = {
-        isSignedIn: false,
-        name: "",
-        email: "",
-        photo: "",
-      };
-      return isSignedOut;
-    })
-    .catch((error) => {
-      console.log(error);
-      console.log(error.message);
-    });
-};
-
-// Facebook Sign In using firebase -----------------------------------------
-export const FacebookSignIn = () => {
-  // Create an instance of the Facebook provider object
-  const facebookProvider = new firebase.auth.FacebookAuthProvider();
-  // To sign in with a Facebook pop-up window, call signInWithPopup:
-  return firebase
-    .auth()
-    .signInWithPopup(facebookProvider)
-    .then((result) => {
-      const user = result.user;
-      user.success = true;
-      return user;
-    })
-    .catch((error) => {
-      console.log(error.code, error.message);
     });
 };
 

@@ -14,11 +14,11 @@ export const initializeLoginFramework = () => {
 };
 
 // Google Sign In using firebase -----------------------------------------
-export const handleGoogleSignIn = () => {
+export const GoogleSignIn = () => {
   // Create an instance of the Google provider object
   const googleProvider = new firebase.auth.GoogleAuthProvider();
   // To sign in with a Google pop-up window, call signInWithPopup
-  firebase
+  return firebase
     .auth()
     .signInWithPopup(googleProvider)
     .then((result) => {
@@ -28,8 +28,9 @@ export const handleGoogleSignIn = () => {
         name: displayName,
         email: email,
         photo: photoURL,
+        success: true,
       };
-      setUser(isSignedIn);
+      return isSignedIn;
     })
     .catch((error) => {
       console.log(error);
@@ -38,8 +39,8 @@ export const handleGoogleSignIn = () => {
 };
 
 // Google Sign Out using firebase-------------------------------------------
-export const handleGoogleSignOut = () => {
-  firebase
+export const GoogleSignOut = () => {
+  return firebase
     .auth()
     .signOut()
     .then(() => {
@@ -49,7 +50,7 @@ export const handleGoogleSignOut = () => {
         email: "",
         photo: "",
       };
-      setUser(isSignedOut);
+      return isSignedOut;
     })
     .catch((error) => {
       console.log(error);
@@ -58,17 +59,17 @@ export const handleGoogleSignOut = () => {
 };
 
 // Facebook Sign In using firebase -----------------------------------------
-export const handleFacebookSignIn = () => {
+export const FacebookSignIn = () => {
   // Create an instance of the Facebook provider object
   const facebookProvider = new firebase.auth.FacebookAuthProvider();
   // To sign in with a Facebook pop-up window, call signInWithPopup:
-  firebase
+  return firebase
     .auth()
     .signInWithPopup(facebookProvider)
     .then((result) => {
-      var user = result.user;
-      setUser(user);
-      console.log(user);
+      const user = result.user;
+      user.success = true;
+      return user;
     })
     .catch((error) => {
       console.log(error.code, error.message);
@@ -76,63 +77,59 @@ export const handleFacebookSignIn = () => {
 };
 
 // GitHub Sign In using firebase -----------------------------------------
-export const handleGitHubSignIn = () => {
+export const GitHubSignIn = () => {
   // Create an instance of the GitHub provider object
   var githubProvider = new firebase.auth.GithubAuthProvider();
   // To sign in with a GitHub pop-up window, call signInWithPopup:
-  firebase
+  return firebase
     .auth()
     .signInWithPopup(githubProvider)
     .then((result) => {
-      var user = result.user;
-      setUser(user);
-      console.log(user);
+      const user = result.user;
+      user.success = true;
+      return user;
     })
     .catch((error) => {
       console.log(error.code, error.message);
     });
 };
 
-export const createUserWithEmailAndPassword = () => {
+export const createUserWithEmailAndPassword = (name, email, password) => {
   // creating User With Email And Password in firebase (a little work with firebase when working  manually)
-  firebase
+  return firebase
     .auth()
-    .createUserWithEmailAndPassword(user.email, user.password)
+    .createUserWithEmailAndPassword(email, password)
     .then((response) => {
       // Signed in
-      const newUserInfo = { ...user };
+      const newUserInfo = response.user;
       newUserInfo.error = " ";
       newUserInfo.success = true;
-      setUser(newUserInfo);
-      updateUserName(user.name);
+      updateUserName(name);
+      return newUserInfo;
     })
     .catch((error) => {
-      const newUserInfo = { ...user };
+      const newUserInfo = {};
       newUserInfo.error = error.message;
       newUserInfo.success = false;
-      setUser(newUserInfo);
+      return newUserInfo;
     });
 };
 
-export const signInWithEmailAndPassword = () => {
-  firebase
+export const signInWithEmailAndPassword = (email, password) => {
+  return firebase
     .auth()
-    .signInWithEmailAndPassword(user.email, user.password)
+    .signInWithEmailAndPassword(email, password)
     .then((response) => {
-      const newUserInfo = { ...user };
+      const newUserInfo = response.user;
       newUserInfo.error = " ";
       newUserInfo.success = true;
-      setUser(newUserInfo);
-      setLogInUser(newUserInfo);
-      // redirect route
-      history.replace(from);
-      console.log("Sign in user info:", response.user);
+      return newUserInfo;
     })
     .catch((error) => {
-      const newUserInfo = { ...user };
+      const newUserInfo = {};
       newUserInfo.error = error.message;
       newUserInfo.success = false;
-      setUser(newUserInfo);
+      return newUserInfo;
     });
 };
 

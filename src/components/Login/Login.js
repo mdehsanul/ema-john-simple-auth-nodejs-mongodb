@@ -1,10 +1,17 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../../App";
 import { useHistory, useLocation } from "react-router";
-import { initializeLoginFramework } from "./loginManager";
+import {
+  initializeLoginFramework,
+  GoogleSignIn,
+  GoogleSignOut,
+  FacebookSignIn,
+  GitHubSignIn,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "./loginManager";
 
 function Login() {
-  // useState()
   const [newUser, setNewUser] = useState(false);
   const [user, setUser] = useState({
     isSignedIn: false,
@@ -18,13 +25,42 @@ function Login() {
 
   initializeLoginFramework();
 
-  // useContext()
   const [logInUser, setLogInUser] = useContext(UserContext);
-  // useHistory()
+
   const history = useHistory();
-  // useLocation()
   const loaction = useLocation();
   let { from } = loaction.state || { from: { pathname: "/" } };
+
+  const handleGoogleSignIn = () => {
+    GoogleSignIn().then((response) => {
+      setUser(response);
+      setLogInUser(response);
+      history.replace(from);
+    });
+  };
+
+  const handleGoogleSignOut = () => {
+    GoogleSignOut().then((response) => {
+      setUser(response);
+      setLogInUser(response);
+    });
+  };
+
+  const handleFacebookSignIn = () => {
+    FacebookSignIn().then((response) => {
+      setUser(response);
+      setLogInUser(response);
+      history.replace(from);
+    });
+  };
+
+  const handleGitHubSignIn = () => {
+    GitHubSignIn().then((response) => {
+      setUser(response);
+      setLogInUser(response);
+      history.replace(from);
+    });
+  };
 
   // -------------------------------------------------------------------- Start Implementation Mnually ---------------------------------------------------------------------------------
 
@@ -53,9 +89,21 @@ function Login() {
   const handleSubmit = (event) => {
     // console.log(user.email, user.password);
     if (newUser && user.email && user.password) {
+      createUserWithEmailAndPassword(user.name, user.email, user.password).then(
+        (response) => {
+          setUser(response);
+          setLogInUser(response);
+          history.replace(from);
+        }
+      );
     }
     // signIn With Email And Password
     if (!newUser && user.email && user.password) {
+      signInWithEmailAndPassword(user.email, user.password).then((response) => {
+        setUser(response);
+        setLogInUser(response);
+        history.replace(from);
+      });
     }
     // prevent auto page loading when submit button click
     event.preventDefault();

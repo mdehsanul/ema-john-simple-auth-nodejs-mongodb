@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { createContext, useState } from "react";
 import "./App.css";
 import Header from "./components/Header/Header";
 import Shop from "./components/Shop/Shop";
@@ -7,12 +7,20 @@ import Inventory from "./components/Inventory/Inventory";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import NoMatch from "./components/NoMatch/NoMatch";
 import ProductDetail from "./components/ProductDetail/ProductDetail";
+import Shipment from "./components/Shipment/Shipment";
+import Login from "./components/Login/Login";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+
+// context API
+export const UserContext = createContext();
 
 function App() {
+  const [logInUser, setLogInUser] = useState({});
   return (
-    <div>
-      <Header></Header>
+    <UserContext.Provider value={[logInUser, setLogInUser]}>
+      <h3>email: {logInUser.email}</h3>
       <Router>
+        <Header></Header>
         <Switch>
           <Route path="/shop">
             <Shop></Shop>
@@ -20,8 +28,14 @@ function App() {
           <Route path="/review">
             <OrderReview></OrderReview>
           </Route>
-          <Route path="/inventory">
+          <PrivateRoute path="/inventory">
             <Inventory></Inventory>
+          </PrivateRoute>
+          <PrivateRoute path="/shipment">
+            <Shipment></Shipment>
+          </PrivateRoute>
+          <Route path="/login">
+            <Login></Login>
           </Route>
           {/* default path */}
           <Route exact path="/">
@@ -37,7 +51,7 @@ function App() {
           </Route>
         </Switch>
       </Router>
-    </div>
+    </UserContext.Provider>
   );
 }
 
@@ -50,3 +64,4 @@ export default App;
 // step-4 -> Cart Component
 // step-5 -> React Routing
 // step-6 -> state Management
+// step-7 -> Authentication

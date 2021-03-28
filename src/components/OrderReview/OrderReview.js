@@ -9,16 +9,19 @@ import Cart from "../Cart/Cart";
 import OrderReviewDetails from "../OrderReviewDetails/OrderReviewDetails";
 import happyImage from "../../images/giphy.gif";
 import "./OrderReview.css";
+import { useHistory } from "react-router";
 
 const OrderReview = () => {
   const [cart, setCart] = useState([]);
 
   // finally place order of the items that are select for Cart
   const [orderPlaced, setorderPlaced] = useState(false);
-  const handlePlaceOrder = () => {
-    setCart([]);
-    setorderPlaced(true);
-    processOrder();
+  const history = useHistory();
+  const handleProceedCheckout = () => {
+    // setCart([]);
+    // setorderPlaced(true);
+    // processOrder();
+    history.push("/shipment");
   };
 
   // removing order item from order review page
@@ -63,8 +66,8 @@ const OrderReview = () => {
       </div>
       <div className="cart-container">
         <Cart cart={cart}>
-          <button className="main-button" onClick={handlePlaceOrder}>
-            Place Order
+          <button className="main-button" onClick={handleProceedCheckout}>
+            Proceed Checkout
           </button>
         </Cart>
       </div>

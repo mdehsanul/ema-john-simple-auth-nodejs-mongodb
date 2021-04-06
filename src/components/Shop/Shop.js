@@ -32,15 +32,16 @@ const Shop = () => {
   useEffect(() => {
     const saveCart = getDatabaseCart(); // loacal database
     const orderProductKeys = Object.keys(saveCart);
-    if (products.length > 0) {
-      const previousCart = orderProductKeys.map((key) => {
-        const product = products.find((pd) => pd.key === key);
-        product.quantity = saveCart[key];
-        return product;
-      });
-      setCart(previousCart);
-    }
-  }, [products]);
+    fetch("http://localhost:4000/productByKeys", {
+      method: "POST",
+      body: JSON.stringify(orderProductKeys),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setCart(data));
+  }, []);
 
   // event-handler to set cart item quentity
   const handleAddProduct = (props) => {

@@ -3,9 +3,10 @@ import fakeData from "../../fakeData";
 
 const Inventory = () => {
   const handleAddProducts = () => {
+    const product = {};
     fetch("http://localhost:4000/addProduct", {
       method: "POST",
-      body: JSON.stringify(fakeData),
+      body: JSON.stringify(product),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
@@ -15,7 +16,25 @@ const Inventory = () => {
   };
   return (
     <div>
-      <button onClick={handleAddProducts}>Add Product</button>
+      <form action="">
+        <p>
+          <span>Name:</span>
+          <input type="text" />
+        </p>
+        <p>
+          <span>price:</span>
+          <input type="text" />
+        </p>
+        <p>
+          <span>qusntity:</span>
+          <input type="text" />
+        </p>
+        <p>
+          <span>product Image</span>
+          <input type="file" />
+        </p>
+        <button onClick={handleAddProducts}>Add Product</button>
+      </form>
     </div>
   );
 };

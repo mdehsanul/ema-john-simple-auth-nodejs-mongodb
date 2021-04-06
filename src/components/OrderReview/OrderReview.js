@@ -37,7 +37,7 @@ const OrderReview = () => {
     // saving cart item
     const saveCart = getDatabaseCart();
     const orderProductKeys = Object.keys(saveCart);
-    fetch("http://localhost:4000/productByKeys", {
+    fetch("https://secure-waters-35832.herokuapp.com/productByKeys", {
       method: "POST",
       body: JSON.stringify(orderProductKeys),
       headers: {

@@ -8,20 +8,21 @@ const ProductDetail = () => {
   const { productKey } = useParams();
 
   // Read from MongoDB
-  const [product, setProduct] = useState();
+  const [product, setProduct] = useState({});
   useEffect(() => {
-    fetch("http://localhost:4000/product/" + productKey)
+    fetch("https://secure-waters-35832.herokuapp.com/product/" + productKey)
       .then((res) => res.json())
       .then((data) => setProduct(data));
   }, [productKey]);
 
   // when API need to use useEffect()
-  // const selectdProduct = fakeData.find((product) => product.key === productKey);
-  const selectdProduct = product.find((product) => product.key === productKey);
+  // const selectdProduct = product.find((pd) => pd.key === productKey);
+
   return (
     <div>
       {/* <h1>{productKey} product detail comming soon</h1> */}
-      <Product productDetails={selectdProduct} showAddToCart={false}></Product>
+      {/* productDetails={selectdProduct} */}
+      <Product productDetails={product} showAddToCart={false}></Product>
     </div>
   );
 };

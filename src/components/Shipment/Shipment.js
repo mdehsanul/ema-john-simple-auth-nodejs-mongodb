@@ -18,7 +18,7 @@ const Shipment = () => {
       shipment: data,
       orderTime: new Date(),
     };
-    fetch("http://localhost:4000/addOrder", {
+    fetch("https://secure-waters-35832.herokuapp.com/addOrder", {
       method: "POST",
       body: JSON.stringify(orderDetails),
       headers: {

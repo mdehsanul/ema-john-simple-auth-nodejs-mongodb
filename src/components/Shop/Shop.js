@@ -19,8 +19,9 @@ const Shop = () => {
   // const [products, setProducts] = useState(firstTwentyData);
 
   // Read from MongoDB
+  // https://secure-waters-35832.herokuapp.com/
   useEffect(() => {
-    fetch("http://localhost:4000/product")
+    fetch("https://secure-waters-35832.herokuapp.com/product")
       .then((res) => res.json())
       .then((data) => setProducts(data));
   }, []);
@@ -32,7 +33,7 @@ const Shop = () => {
   useEffect(() => {
     const saveCart = getDatabaseCart(); // loacal database
     const orderProductKeys = Object.keys(saveCart);
-    fetch("http://localhost:4000/productByKeys", {
+    fetch("https://secure-waters-35832.herokuapp.com/productByKeys", {
       method: "POST",
       body: JSON.stringify(orderProductKeys),
       headers: {

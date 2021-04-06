@@ -3,7 +3,7 @@ import firebase from "firebase/app";
 // Add the Firebase products that you want to use
 import "firebase/auth";
 // Add firebaseConfig when Initialize Firebase
-import firebaseConfig from "../Login/firebase.config";
+import firebaseConfig from "./configs/firebase.config";
 
 export const initializeLoginFramework = () => {
   // if firebase initialize 2 time then for avoid error need to write this condition

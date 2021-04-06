@@ -102,11 +102,7 @@ function Login() {
   return (
     // ------------------------------ start firebase --------------------------------------
     <div style={{ textAlign: "center" }}>
-      {user.isSignedIn ? (
-        <button onClick={signOut}>Sign Out</button>
-      ) : (
-        <button onClick={googleSignIn}>Sign In</button>
-      )}
+      <button onClick={googleSignIn}>Sign In</button>
       <br />
       <button onClick={fbSignIn}>Sign in using Facebook</button>
       {user.isSignedIn && (

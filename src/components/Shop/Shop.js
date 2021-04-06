@@ -12,24 +12,35 @@ import { Link } from "react-router-dom";
 
 const Shop = () => {
   // console.log(fakeData);
+
   // product part
-  const firstTwentyData = fakeData.slice(0, 20);
-  const [products, setProducts] = useState(firstTwentyData);
+  const [products, setProducts] = useState([]);
+  // const firstTwentyData = fakeData.slice(0, 20);
+  // const [products, setProducts] = useState(firstTwentyData);
+
+  // Read from MongoDB
+  useEffect(() => {
+    fetch("http://localhost:4000/product")
+      .then((res) => res.json())
+      .then((data) => setProducts(data));
+  }, []);
 
   // cart part
   const [cart, setCart] = useState([]);
 
   // if moveing multiple page, throught this code we can remain cart item same in the multiple page
   useEffect(() => {
-    const saveCart = getDatabaseCart();
+    const saveCart = getDatabaseCart(); // loacal database
     const orderProductKeys = Object.keys(saveCart);
-    const previousCart = orderProductKeys.map((key) => {
-      const product = fakeData.find((pd) => pd.key === key);
-      product.quantity = saveCart[key];
-      return product;
-    });
-    setCart(previousCart);
-  }, []);
+    if (products.length > 0) {
+      const previousCart = orderProductKeys.map((key) => {
+        const product = products.find((pd) => pd.key === key);
+        product.quantity = saveCart[key];
+        return product;
+      });
+      setCart(previousCart);
+    }
+  }, [products]);
 
   // event-handler to set cart item quentity
   const handleAddProduct = (props) => {

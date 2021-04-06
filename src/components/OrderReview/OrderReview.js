@@ -32,17 +32,20 @@ const OrderReview = () => {
     removeFromDatabaseCart(props.key);
   };
 
+  // Sending data in back-end fro Read
   useEffect(() => {
     // saving cart item
     const saveCart = getDatabaseCart();
     const orderProductKeys = Object.keys(saveCart);
-    const cartProducts = orderProductKeys.map((key) => {
-      const product = fakeData.find((pd) => pd.key === key);
-      product.quantity = saveCart[key];
-      return product;
-    });
-    // console.log(cartProducts);
-    setCart(cartProducts);
+    fetch("http://localhost:4000/productByKeys", {
+      method: "POST",
+      body: JSON.stringify(orderProductKeys),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setCart(data));
   }, []);
 
   // when order place "thank you" message

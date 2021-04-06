@@ -58,9 +58,10 @@ export default App;
 
 // start  -> App.js
 // step-1 -> Header Component
-// step-2 -> Shop Component
+// step-2 -> Shop Component (with fakeData)
 // step-3 -> Product Component
 // step-4 -> Cart Component
 // step-5 -> React Routing
 // step-6 -> state Management
-// step-7 -> Authentication
+// step-7 -> Firebase - Authentication with <PrivateRoute> Route
+// step-8 -> DataBase(MongoDB)
